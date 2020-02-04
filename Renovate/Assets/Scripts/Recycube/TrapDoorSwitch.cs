@@ -25,4 +25,9 @@ public class TrapDoorSwitch : MonoBehaviour
     {
         _trap.SetActive(val);
     }
+
+    public void OpenTrap()
+    {
+        _trap.GetComponent<Animator>().Play("trapdoor open");
+    }
 }

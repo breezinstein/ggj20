@@ -10,20 +10,23 @@ public class Neighbourhood : MonoBehaviour
     public SubLevelButton subLevelButtonPrefab;
     public GridLayoutGroup grid;
     public GameObject subLevelHolder;
-
-    public bool isRestored { get { return subLevels.All(x => x.isSolved == true); } }
+    public int levelID;
+    public bool isRestored { get { return PlayerPrefs.HasKey($"{levelID }"); } }
+    //public bool isRestored { get { return subLevels.All(x => x.isSolved == true); } }
     public SpriteRenderer spriteRenderer;
-    public Clickable clickable;
+    //public Clickable clickable;
     public Sprite destroyedSprite;
     public Sprite repairedSprite;
+
+    
 
     // Start is called before the first frame update
     private void Start()
     {
-        clickable.SetupListeners(() => { }, () => { }, () => ShowSublevels(true));
+   //     clickable.SetupListeners(() => { }, () => { }, () => ShowSublevels(true));
         UpdateSprite();
     }
-    void ShowSublevels(bool val)
+    public void ShowSublevels(bool val)
     {
         if (val == true)
         {
@@ -45,6 +48,11 @@ public class Neighbourhood : MonoBehaviour
 
     }
 
+    public void LoadLevel()
+    {
+        GameManager.level = levelID;
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Recycube");
+    }
     void UpdateSprite()
     {
         spriteRenderer.sprite = isRestored ? repairedSprite : destroyedSprite;

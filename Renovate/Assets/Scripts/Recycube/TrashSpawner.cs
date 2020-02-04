@@ -11,24 +11,31 @@ public class TrashSpawner : MonoBehaviour
     [SerializeField]
     private float _duration = 2f;
 
+    bool isSpawning;
+
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(Spawn());
+        //StartSpawning();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void StartSpawning()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Spawn();
-        }
-    }
+        isSpawning = true;
+        StartCoroutine(Spawn());
 
+    }
+    public void StopSpawning()
+    {
+        isSpawning = false;
+        
+    }
     IEnumerator Spawn()
     {
-        Instantiate(trashPrefabs[0], spawnLocation.position, Quaternion.Euler(0f, 0f, Random.Range(0, 365)));
+        if (isSpawning)
+        {
+            Instantiate(trashPrefabs[Random.Range(0, 6)], spawnLocation.position, Quaternion.Euler(0f, 0f, Random.Range(0, 365)));
+        }
         yield return new WaitForSeconds(_duration);
         StartCoroutine(Spawn());
     }
